@@ -1,0 +1,76 @@
+<!-- <div class="container"> -->
+
+<div class="row">
+	<div class="col-sm-6">
+
+		<div *ngFor="let parent of categoryList">
+			<h4 (click)="managecat(parent)" title="click to update"> * {{parent.cat_name}}</h4>
+
+			<div class="list-group">
+				<div *ngFor="let subcat of parent.sub_cat" class="list-group-item">
+					<h4 title="click to update" class="list-group-item-heading" (click)="managecat(subcat)"> ->
+						{{subcat.cat_name}}</h4>
+					<p *ngFor="let subsubcat of subcat.sub_sub_cat" class="list-group-item-text"
+						(click)="managecat(subsubcat)" title="click to update"> -> -> {{subsubcat.cat_name}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-sm-6">
+		<button class="btn-primary mt-10" (click)="AddCat()"> Add New Cat</button>
+
+		<div *ngIf="edit.is_editing">
+			<div class="card">
+				<div class="card-body">
+					<form [formGroup]='editCatForm' (ngSubmit)="NewCat(editCatForm)">
+						<div class="row form-group col-lg-10">
+							<label> Update Parent Category </label>
+							<select formControlName="catParent" class="form-control">
+								<option value="none"> None</option>
+								<option [ngValue]="cat.id" *ngFor="let cat of catDropDown">{{cat.name}}</option>
+							</select>
+						</div>
+
+						<div class="row form-group col-lg-10">
+							<label> Category Name:</label>
+							<input type="text" class="form-control" formControlName="catName" name="Newcat" />
+						</div>
+
+						<button type="submit" class="btn btn-primary mb-2" align="center">Save Changes</button>
+					</form>
+					<button class="btn btn-danger mb-2" align="center" (click)="deleteFn(edit.edit_id)">Delete</button>
+
+				</div>
+			</div>
+		</div>
+
+		<div *ngIf="!edit.is_editing && new_category">
+
+			<form [formGroup]='newCatForm' (ngSubmit)="NewCat(newCatForm)">
+
+				<div class="row form-group col-lg-10">
+					<label> Select Parent Category if any: </label>
+					<select formControlName="parentCat" class="form-control">
+						<option value="none"> None</option>
+						<option [value]="cat.id" *ngFor="let cat of catDropDown">{{cat.name}}</option>
+					</select>
+				</div>
+
+				<div class="row form-group col-lg-10">
+					<label>New Category:</label>
+					<input type="text" class="form-control" formControlName="newCat" name="newCat" />
+				</div>
+
+				<button type="submit" class="btn btn-primary mb-2" align="center"
+					(click)="showtime=true">Submit</button>
+			</form>
+
+		</div>
+	</div>
+
+</div>
+
+
+
+<!-- </div> -->

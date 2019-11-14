@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="productForm" (ngSubmit)="UpdateProduct(productForm)">
+            
+            <div class="row form-group col-lg-10">
+                <label> Select Parent Category* </label>
+                <select formControlName="cat_basic" class="form-control"  (change)="updateCatsOnLevel('two')">
+                    <option [ngValue]="cat.id" *ngFor="let cat of categories.basic">{{cat.name}}</option>
+                </select>
+            </div> 
+
+            <div *ngIf="categories.level_one.length >= 1" class="row form-group col-lg-10">
+                <label> Select Sub Category* </label>
+                <select formControlName="cat_level_one" class="form-control" (change)="updateCatsOnLevel('three')" multiple>
+                    <option [ngValue]="cat.id" *ngFor="let cat of categories.level_one">{{cat.name}}</option>
+                </select>
+            </div> 
+
+            <div *ngIf="categories.level_two.length >= 1" class="row form-group col-lg-10">
+                <label> Select Sub-Sub Category* </label>
+                <select formControlName="cat_level_two" class="form-control" multiple>
+                    <option [ngValue]="cat.id" *ngFor="let cat of categories.level_two">{{cat.name}}</option>
+                </select>
+            </div> 
+
+
+            <div class="row form-group col-lg-10">
+                <label> Product Name:</label>
+                <input type="text" class="form-control" formControlName="product_name" />
+            </div>
+
+            <div class="row form-group col-lg-10">
+                    <label> Product Description:</label>
+                    <input type="text" class="form-control" formControlName="product_desc" />
+                </div>
+    
+            <div class="row form-group col-lg-10">
+                    <label> Product Price:</label>
+                    <input type="text" class="form-control" formControlName="product_price" />
+            </div>
+            <div class="row form-group col-lg-10">
+                    <label> Product Image:</label>
+                    <input type="file" class="form-control" #myInput 
+                    (change)="upload($event.target.files,'product_image')" />
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2" align="center">Save</button>
+        </form>
+        <!-- <button class="btn btn-danger mb-2" align="center" (click)="deleteFn(edit.edit_id)">Delete</button> -->
+
+    </div>
+</div>

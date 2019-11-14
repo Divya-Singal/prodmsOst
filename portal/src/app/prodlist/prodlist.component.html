@@ -1,0 +1,76 @@
+<!-- 
+<button class="btn-info mt-10" (click)="view='card'">Card View</button>
+<button  class="btn-info mt-10" (click)="view='table'">Table View</button> -->
+
+<div class="card" *ngIf="view=='table'">
+        <div class="card-body">
+<table class="table">
+    <thead>
+    <tr>
+                <td>
+                    #
+                </td>
+                <td>
+                    Product Name
+                </td><td>
+                    Description
+                </td>
+                <td>
+                    Price
+                </td>
+                <td>
+                    Categories
+                </td>
+                <td>
+                    Action
+                </td>
+    </tr>
+</thead>
+<tbody>
+    <tr *ngFor="let obj of productList ; let i = index">
+        <td>
+            {{i+1}}
+        </td>
+        <td>
+            {{obj.prod_name}}
+            <img *ngIf="obj.image != null" src="{{obj.image}}" alt="..." class="img-thumbnail" height="200" width="200">
+        </td>
+        <td>
+            {{obj.prod_description}}
+        </td>
+        <td>
+            {{obj.prod_price}}
+        </td>
+        <td>
+            
+                <ng-container *ngFor="let item of obj.category_list" >
+                        <p>{{ item.cat_name }} &nbsp; </p> 
+                       </ng-container>
+
+        </td>
+        <td>
+             <button class="btn btn-warning btn-sm" [routerLink]="['/prodms',obj.id]">Edit</button> 
+             <button class="btn btn-danger btn-sm" (click)="deleteFn(obj.id)">Delete</button> 
+        </td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div *ngIf="view=='card'">
+    <div class="card" style="width: 18rem;" *ngFor="let obj of productList ; let i = index">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">  {{obj.prod_name}}</h5>
+          <p class="card-text"> Price :  {{obj.prod_price}} </p>
+          
+          <ng-container *ngFor="let item of obj.category_list" >
+            <p class="card-text">{{ item.cat_name }} &nbsp; </p>
+           </ng-container>
+          
+          <button class="btn btn-warning btn-sm" [routerLink]="['/prodms',obj.id]">Edit</button> 
+          <button class="btn btn-danger btn-sm" (click)="deleteFn(obj.id)">Delete</button> 
+        </div>
+      </div>
+</div>
